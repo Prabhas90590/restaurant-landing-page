@@ -1,0 +1,13 @@
+.menu-section { padding: 80px 20px; background: #fff; }
+.menu-container { max-width: 1200px; margin: 0 auto; }
+.menu-container h2 { font-size: 32px; margin-bottom: 30px; color: #1a1a1a; }
+.scroll-container { display: flex; overflow-x: auto; gap: 24px; padding-bottom: 20px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.scroll-container::-webkit-scrollbar { display: none; }
+.dish-card { min-width: 300px; background: white; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); overflow: hidden; scroll-snap-align: center; }
+.dish-img { width: 100%; height: 220px; object-fit: cover; }
+.dish-info { padding: 20px; }
+.dish-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.dish-header h3 { margin: 0; font-size: 20px; }
+.price { color: #ff4d4d; font-weight: bold; font-size: 18px; }
+.order-btn { width: 100%; background: transparent; border: 1px solid #ff4d4d; color: #ff4d4d; padding: 10px; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+.order-btn:hover { background: #ff4d4d; color: white; }

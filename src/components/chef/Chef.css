@@ -1,0 +1,9 @@
+.chef-section { padding: 80px 20px; background: white; }
+.chef-container { max-width: 1000px; margin: 0 auto; background: #f9fafb; border-radius: 24px; padding: 50px; display: flex; align-items: center; gap: 50px; }
+.chef-img { width: 300px; height: 300px; object-fit: cover; border-radius: 50%; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+.chef-title { color: #ff4d4d; font-weight: bold; letter-spacing: 2px; }
+.chef-info h2 { font-size: 36px; margin: 10px 0 20px; }
+.chef-info p { color: #666; line-height: 1.8; font-size: 16px; }
+@media (max-width: 768px) {
+  .chef-container { flex-direction: column; text-align: center; padding: 30px; }
+}

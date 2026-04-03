@@ -1,0 +1,11 @@
+.exp-section { padding: 80px 20px; background: #f9fafb; }
+.exp-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+.exp-images { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.img-1, .img-2 { width: 100%; height: 300px; object-fit: cover; border-radius: 16px; }
+.img-2 { margin-top: 40px; }
+.exp-text h2 { font-size: 36px; color: #1a1a1a; margin-bottom: 20px; }
+.exp-text p { color: #666; line-height: 1.8; margin-bottom: 30px; font-size: 16px; }
+.book-table-btn { background: #1a1a1a; color: white; border: none; padding: 14px 32px; border-radius: 8px; font-size: 16px; cursor: pointer; }
+@media (max-width: 768px) {
+  .exp-container { grid-template-columns: 1fr; }
+}
