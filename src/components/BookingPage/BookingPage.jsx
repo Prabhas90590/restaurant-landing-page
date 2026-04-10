@@ -254,7 +254,6 @@ const BookingPage = () => {
                 rows="4"
               ></textarea>
             </div>
-
             <div className="booking-summary">
               <h3>Booking Summary</h3>
               <div className="summary-item">
