@@ -8,6 +8,13 @@ import './Hero.css';
 import mainImage from '../../assets/hero.png'; 
 
 const Hero = () => {
+  const handleExploreClick = () => {
+    const menuSection = document.getElementById('menu');
+    if (menuSection) {
+      menuSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="hero-section">
       <div className="hero-container">
@@ -16,7 +23,7 @@ const Hero = () => {
         <div className="hero-content">
           <h1>Taste the <br/><span className="highlight">Difference</span></h1>
           <p>Experience culinary excellence with our carefully crafted dishes, made from the freshest local ingredients.</p>
-          <button className="explore-btn">Explore Menu</button>
+          <button className="explore-btn" onClick={handleExploreClick}>Explore Menu</button>
         </div>
 
         {/* Right Side: The Image Circle */}

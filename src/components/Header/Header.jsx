@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Header.css';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleBooking = () => {
+    navigate('/booking');
+  };
 
   return (
     <nav className="header-nav">
@@ -12,7 +18,7 @@ const Header = () => {
           <a href="#">Home</a>
           <a href="#menu">Menu</a>
           <a href="#experience">Experience</a>
-          <button className="book-btn">Book a Table</button>
+          <button className="book-btn" onClick={handleBooking}>Book a Table</button>
         </div>
         <button className="mobile-toggle" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? '✕' : '☰'}
@@ -23,7 +29,7 @@ const Header = () => {
           <a href="#">Home</a>
           <a href="#menu">Menu</a>
           <a href="#experience">Experience</a>
-          <button className="book-btn w-full">Order Now</button>
+          <button className="book-btn w-full" onClick={handleBooking}>Book a Table</button>
         </div>
       )}
     </nav>
