@@ -117,13 +117,21 @@ const restaurants = [
 ];
 
 const FeaturedDishes = () => {
+  const formatInr = (value) =>
+    new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(Number(value));
+
   const [activeRestaurantId, setActiveRestaurantId] = useState(restaurants[0].id);
   const activeRestaurant = restaurants.find((restaurant) => restaurant.id === activeRestaurantId) || restaurants[0];
 
   return (
     <section id="menu" className="menu-section">
       <div className="menu-container">
-        <h2>Popular Dishes</h2>
+        <h2>Popular Restaurents</h2>
         <p className="menu-subtitle">Pick a restaurant to view its menu</p>
 
         <div className="restaurant-grid">
@@ -152,7 +160,7 @@ const FeaturedDishes = () => {
               <div className="dish-info">
                 <div className="dish-header">
                   <h3>{dish.name}</h3>
-                  <span className="price">${dish.price}</span>
+                  <span className="price">{formatInr(dish.price)}</span>
                 </div>
                 <button className="order-btn">Order Now</button>
               </div>

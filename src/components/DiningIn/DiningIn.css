@@ -1,0 +1,171 @@
+.dining-section {
+  padding: 90px 20px;
+  background: linear-gradient(120deg, #fff8f3 0%, #ffffff 55%, #fff0e8 100%);
+}
+
+.dining-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.dining-eyebrow {
+  color: #e85d2a;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+
+.dining-content h2 {
+  font-size: 40px;
+  line-height: 1.2;
+  color: #1f1a17;
+  margin-bottom: 16px;
+}
+
+.dining-content > p {
+  color: #6c5f57;
+  line-height: 1.75;
+  margin-bottom: 26px;
+  max-width: 560px;
+}
+
+.dining-highlights {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.dining-highlight-item {
+  background: #ffffff;
+  border: 1px solid #ffd9c9;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.dining-highlight-item h3 {
+  font-size: 16px;
+  color: #1f1a17;
+  margin-bottom: 8px;
+}
+
+.dining-highlight-item p {
+  font-size: 14px;
+  color: #776c66;
+  line-height: 1.55;
+}
+
+.ambience-section {
+  margin: 22px 0 30px;
+}
+
+.ambience-header {
+  margin-bottom: 16px;
+}
+
+.ambience-eyebrow {
+  color: #e85d2a;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+
+.ambience-header h3 {
+  font-size: 24px;
+  line-height: 1.25;
+  color: #1f1a17;
+  max-width: 520px;
+}
+
+.ambience-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.ambience-card {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #fff;
+  border: 1px solid #ffd9c9;
+  box-shadow: 0 14px 28px rgba(31, 26, 23, 0.08);
+}
+
+.ambience-photo {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+.ambience-card figcaption {
+  padding: 12px 14px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #332a25;
+}
+
+.dining-book-btn {
+  background: #1f1a17;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 30px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dining-book-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(31, 26, 23, 0.18);
+}
+
+.dining-image {
+  min-height: 460px;
+  border-radius: 24px;
+  background-image: linear-gradient(rgba(31, 26, 23, 0.15), rgba(31, 26, 23, 0.25)),
+    url('https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80');
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 1024px) {
+  .dining-highlights {
+    grid-template-columns: 1fr;
+  }
+
+  .ambience-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .dining-container {
+    grid-template-columns: 1fr;
+  }
+
+  .dining-content h2 {
+    font-size: 32px;
+  }
+
+  .dining-image {
+    min-height: 320px;
+  }
+
+  .ambience-header h3 {
+    font-size: 22px;
+  }
+
+  .ambience-photo {
+    height: 220px;
+  }
+}

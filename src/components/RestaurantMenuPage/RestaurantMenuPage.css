@@ -1,0 +1,164 @@
+.restaurant-menu-page {
+  min-height: 100vh;
+  padding: 110px 20px 70px;
+  background: #f8fafc;
+}
+
+.restaurant-menu-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.menu-back-btn {
+  border: 1px solid #d5dce5;
+  background: #fff;
+  color: #1f1f1f;
+  padding: 10px 16px;
+  border-radius: 8px;
+  margin-bottom: 14px;
+  cursor: pointer;
+}
+
+.restaurant-header {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 18px;
+  background: #fff;
+  border: 1px solid #e6ebf0;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+
+.restaurant-header img {
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  object-fit: cover;
+}
+
+.restaurant-header > div {
+  padding: 20px;
+}
+
+.restaurant-header h1 {
+  margin-bottom: 8px;
+}
+
+.restaurant-header > div > p {
+  color: #69707b;
+  margin-bottom: 12px;
+}
+
+.restaurant-header-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.restaurant-header-meta span {
+  background: #f2f6fa;
+  color: #3f4a58;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 13px;
+}
+
+.menu-layout {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: 16px;
+}
+
+.food-items-list {
+  display: grid;
+  gap: 12px;
+}
+
+.food-item-card {
+  border: 1px solid #e6ebf0;
+  background: #fff;
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.food-item-card h2 {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.food-item-card p {
+  color: #69707b;
+}
+
+.qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.qty-controls button {
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 8px;
+  background: #ff4d4d;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.qty-controls span {
+  min-width: 20px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.cart-summary-card {
+  border: 1px solid #e6ebf0;
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  height: fit-content;
+  position: sticky;
+  top: 98px;
+}
+
+.cart-summary-card h3 {
+  margin-bottom: 12px;
+}
+
+.cart-summary-card p {
+  margin-bottom: 8px;
+  color: #4f5a68;
+}
+
+.cart-summary-card button {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  background: #1c1c1c;
+  color: #fff;
+  padding: 12px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.cart-summary-card button:disabled {
+  background: #a2a7af;
+  cursor: not-allowed;
+}
+
+@media (max-width: 960px) {
+  .restaurant-header,
+  .menu-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .cart-summary-card {
+    position: static;
+  }
+}

@@ -4,3 +4,19 @@
   box-sizing: border-box;
   font-family: sans-serif;
 }
+
+body {
+  background: #ffffff;
+  color: #1b1b1b;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+body.theme-light {
+  background: #ffffff;
+  color: #1b1b1b;
+}
+
+body.theme-dark {
+  background: #0f1115;
+  color: #eceff4;
+}

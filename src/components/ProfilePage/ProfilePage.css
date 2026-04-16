@@ -1,0 +1,205 @@
+.profile-edit-page {
+  min-height: 100vh;
+  padding: 110px 20px 80px;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255, 177, 125, 0.42), transparent 36%),
+    radial-gradient(circle at 88% 84%, rgba(234, 93, 45, 0.24), transparent 42%),
+    linear-gradient(135deg, #fff7ef 0%, #fffdf9 48%, #f7faff 100%);
+}
+
+.profile-edit-container {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.profile-edit-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.profile-edit-topbar h1 {
+  margin: 0;
+  font-size: clamp(30px, 4vw, 44px);
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  color: #261710;
+}
+
+.back-btn {
+  border: 1px solid rgba(38, 23, 16, 0.2);
+  background: rgba(255, 255, 255, 0.78);
+  color: #2f2018;
+  padding: 10px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+  backdrop-filter: blur(8px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.back-btn:hover {
+  transform: translateY(-1px);
+  border-color: rgba(232, 93, 42, 0.5);
+  box-shadow: 0 10px 20px rgba(36, 24, 18, 0.12);
+}
+
+.profile-edit-form {
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.95), rgba(255, 251, 246, 0.86));
+  box-shadow:
+    0 26px 48px rgba(84, 44, 22, 0.12),
+    0 8px 18px rgba(84, 44, 22, 0.08);
+  padding: 28px;
+  backdrop-filter: blur(10px);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.form-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #463127;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.form-grid input,
+.form-grid textarea {
+  border: 1px solid #e9d8cc;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 15px;
+  font-family: inherit;
+  color: #2b1d16;
+  background: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.form-grid textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.form-grid input::placeholder,
+.form-grid textarea::placeholder {
+  color: #a08a7e;
+}
+
+.form-grid input:focus,
+.form-grid textarea:focus {
+  outline: none;
+  border-color: #e85d2a;
+  box-shadow: 0 0 0 4px rgba(232, 93, 42, 0.14);
+  background: #fffefd;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.profile-edit-actions {
+  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.auth-form .profile-edit-actions {
+  justify-content: flex-start;
+}
+
+.save-btn,
+.cancel-btn,
+.logout-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.save-btn {
+  background: linear-gradient(135deg, #1f1f1f, #3a3a3a);
+  color: #fff;
+  box-shadow: 0 10px 20px rgba(31, 31, 31, 0.2);
+}
+
+.cancel-btn {
+  background: linear-gradient(135deg, #f2f5f9, #e8edf4);
+  color: #2d3642;
+  border: 1px solid #d8e0ea;
+}
+
+.logout-btn {
+  background: linear-gradient(135deg, #b42318, #8f1d14);
+  color: #fff;
+  box-shadow: 0 10px 20px rgba(143, 29, 20, 0.22);
+}
+
+.save-btn:hover,
+.cancel-btn:hover,
+.logout-btn:hover {
+  transform: translateY(-1px);
+  filter: saturate(1.05);
+}
+
+.saved-message,
+.otp-preview {
+  margin-top: 14px;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-weight: 700;
+}
+
+.saved-message {
+  color: #135e33;
+  background: rgba(22, 163, 74, 0.12);
+  border: 1px solid rgba(22, 163, 74, 0.25);
+}
+
+.otp-preview {
+  color: #1d4ed8;
+  background: rgba(37, 99, 235, 0.1);
+  border: 1px solid rgba(37, 99, 235, 0.22);
+}
+
+@media (max-width: 768px) {
+  .profile-edit-page {
+    padding: 96px 16px 64px;
+  }
+
+  .profile-edit-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-edit-form {
+    padding: 20px;
+    border-radius: 18px;
+  }
+
+  .save-btn,
+  .cancel-btn,
+  .logout-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
