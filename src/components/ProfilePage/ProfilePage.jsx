@@ -4,6 +4,7 @@ import './ProfilePage.css';
 
 const PROFILE_STORAGE_KEY = 'orderCheyProfile';
 const AUTH_STORAGE_KEY = 'orderCheyAuth';
+const USERS_STORAGE_KEY = 'orderCheyUsers';
 
 const defaultProfile = {
   fullName: 'Arjun Rao',
@@ -13,6 +14,31 @@ const defaultProfile = {
   favoriteCuisine: 'Mediterranean',
   preferredSeating: 'Window Seat',
   dietaryNote: 'Vegetarian Friendly'
+};
+
+const normalizePhone = (value) => value.replace(/\D/g, '');
+
+const getStoredUsers = () => {
+  const savedUsers = localStorage.getItem(USERS_STORAGE_KEY);
+  if (!savedUsers) return [];
+
+  try {
+    const parsed = JSON.parse(savedUsers);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+};
+
+const findUserByIdentifier = (users, identifier) => {
+  const normalizedIdentifier = identifier.trim().toLowerCase();
+  const normalizedPhone = normalizePhone(identifier);
+
+  return users.find((user) => {
+    const sameEmail = (user.email || '').toLowerCase() === normalizedIdentifier;
+    const samePhone = normalizePhone(user.phone || '') === normalizedPhone;
+    return sameEmail || samePhone;
+  });
 };
 
 const ProfilePage = () => {
@@ -44,13 +70,18 @@ const ProfilePage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(initialAuthState);
   const [profileData, setProfileData] = useState(initialProfileData);
   const [isSaved, setIsSaved] = useState(false);
+  const [authMode, setAuthMode] = useState('login');
   const [authMessage, setAuthMessage] = useState('');
-  const [generatedOtp, setGeneratedOtp] = useState('');
-  const [enteredOtp, setEnteredOtp] = useState('');
   const [loginDetails, setLoginDetails] = useState({
+    identifier: '',
+    password: ''
+  });
+  const [signupDetails, setSignupDetails] = useState({
     fullName: initialProfileData.fullName,
     email: initialProfileData.email,
-    phone: initialProfileData.phone
+    phone: initialProfileData.phone,
+    password: '',
+    confirmPassword: ''
   });
 
   const handleLoginInputChange = (e) => {
@@ -62,35 +93,41 @@ const ProfilePage = () => {
     setAuthMessage('');
   };
 
-  const handleGenerateOtp = () => {
-    if (!loginDetails.fullName || !loginDetails.email || !loginDetails.phone) {
-      setAuthMessage('Please fill in name, email, and phone first.');
-      return;
-    }
-
-    const otp = String(Math.floor(100000 + Math.random() * 900000));
-    setGeneratedOtp(otp);
-    setAuthMessage('OTP generated. Enter it below to log in.');
+  const handleSignupInputChange = (e) => {
+    const { name, value } = e.target;
+    setSignupDetails((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+    setAuthMessage('');
   };
 
   const handleLogin = (e) => {
     e.preventDefault();
 
-    if (!generatedOtp) {
-      setAuthMessage('Generate OTP first.');
+    if (!loginDetails.identifier || !loginDetails.password) {
+      setAuthMessage('Enter your email or mobile number and password.');
       return;
     }
 
-    if (enteredOtp !== generatedOtp) {
-      setAuthMessage('Invalid OTP. Please try again.');
+    const users = getStoredUsers();
+    const user = findUserByIdentifier(users, loginDetails.identifier);
+
+    if (!user) {
+      setAuthMessage('No account found. Please sign up first.');
+      return;
+    }
+
+    if (user.password !== loginDetails.password) {
+      setAuthMessage('Incorrect password. Please try again.');
       return;
     }
 
     const updatedProfile = {
       ...profileData,
-      fullName: loginDetails.fullName,
-      email: loginDetails.email,
-      phone: loginDetails.phone
+      fullName: user.fullName,
+      email: user.email,
+      phone: user.phone
     };
 
     setProfileData(updatedProfile);
@@ -99,22 +136,97 @@ const ProfilePage = () => {
       AUTH_STORAGE_KEY,
       JSON.stringify({
         isLoggedIn: true,
-        fullName: loginDetails.fullName,
-        email: loginDetails.email
+        fullName: user.fullName,
+        email: user.email,
+        phone: user.phone
       })
     );
 
     setIsLoggedIn(true);
     setAuthMessage('Login successful.');
-    setGeneratedOtp('');
-    setEnteredOtp('');
+  };
+
+  const handleSignup = (e) => {
+    e.preventDefault();
+
+    const fullName = signupDetails.fullName.trim();
+    const email = signupDetails.email.trim().toLowerCase();
+    const phone = signupDetails.phone.trim();
+    const normalizedPhone = normalizePhone(phone);
+
+    if (!fullName || !email || !phone || !signupDetails.password || !signupDetails.confirmPassword) {
+      setAuthMessage('Please complete all sign up fields.');
+      return;
+    }
+
+    if (!email.includes('@')) {
+      setAuthMessage('Please enter a valid email address.');
+      return;
+    }
+
+    if (normalizedPhone.length < 10) {
+      setAuthMessage('Please enter a valid mobile number.');
+      return;
+    }
+
+    if (signupDetails.password.length < 6) {
+      setAuthMessage('Password must be at least 6 characters.');
+      return;
+    }
+
+    if (signupDetails.password !== signupDetails.confirmPassword) {
+      setAuthMessage('Passwords do not match.');
+      return;
+    }
+
+    const users = getStoredUsers();
+    const emailExists = users.some((user) => (user.email || '').toLowerCase() === email);
+    const phoneExists = users.some((user) => normalizePhone(user.phone || '') === normalizedPhone);
+
+    if (emailExists || phoneExists) {
+      setAuthMessage('User already exists. Please login.');
+      setAuthMode('login');
+      return;
+    }
+
+    const newUser = {
+      id: `user-${Date.now()}`,
+      fullName,
+      email,
+      phone,
+      password: signupDetails.password
+    };
+
+    localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify([...users, newUser]));
+
+    const updatedProfile = {
+      ...profileData,
+      fullName,
+      email,
+      phone
+    };
+
+    setProfileData(updatedProfile);
+    localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(updatedProfile));
+    localStorage.setItem(
+      AUTH_STORAGE_KEY,
+      JSON.stringify({
+        isLoggedIn: true,
+        fullName,
+        email,
+        phone
+      })
+    );
+
+    setIsLoggedIn(true);
+    setAuthMessage('Account created successfully.');
   };
 
   const handleLogout = () => {
     localStorage.removeItem(AUTH_STORAGE_KEY);
     setIsLoggedIn(false);
-    setGeneratedOtp('');
-    setEnteredOtp('');
+    setAuthMode('login');
+    setLoginDetails({ identifier: '', password: '' });
     setAuthMessage('Logged out successfully.');
   };
 
@@ -141,66 +253,135 @@ const ProfilePage = () => {
             <button className="back-btn" onClick={() => navigate('/')}>
               Back to Home
             </button>
-            <h1>Login to Your Profile</h1>
+            <h1>Login or Sign Up</h1>
           </div>
 
-          <form className="profile-edit-form auth-form" onSubmit={handleLogin}>
-            <div className="form-grid">
-              <label>
-                Full Name
-                <input
-                  name="fullName"
-                  value={loginDetails.fullName}
-                  onChange={handleLoginInputChange}
-                  required
-                />
-              </label>
+          <div className="auth-mode-toggle" role="tablist" aria-label="Authentication mode">
+            <button
+              type="button"
+              className={`mode-btn ${authMode === 'login' ? 'active' : ''}`}
+              onClick={() => {
+                setAuthMode('login');
+                setAuthMessage('');
+              }}
+            >
+              Login
+            </button>
+            <button
+              type="button"
+              className={`mode-btn ${authMode === 'signup' ? 'active' : ''}`}
+              onClick={() => {
+                setAuthMode('signup');
+                setAuthMessage('');
+              }}
+            >
+              Sign Up
+            </button>
+          </div>
 
-              <label>
-                Email
-                <input
-                  name="email"
-                  type="email"
-                  value={loginDetails.email}
-                  onChange={handleLoginInputChange}
-                  required
-                />
-              </label>
+          {authMode === 'login' ? (
+            <form className="profile-edit-form auth-form" onSubmit={handleLogin}>
+              <div className="form-grid">
+                <label className="full-width">
+                  Email or Mobile Number
+                  <input
+                    name="identifier"
+                    value={loginDetails.identifier}
+                    onChange={handleLoginInputChange}
+                    placeholder="Enter email or mobile"
+                    required
+                  />
+                </label>
 
-              <label className="full-width">
-                Phone
-                <input
-                  name="phone"
-                  value={loginDetails.phone}
-                  onChange={handleLoginInputChange}
-                  required
-                />
-              </label>
+                <label className="full-width">
+                  Password
+                  <input
+                    name="password"
+                    type="password"
+                    value={loginDetails.password}
+                    onChange={handleLoginInputChange}
+                    placeholder="Enter password"
+                    required
+                  />
+                </label>
+              </div>
 
-              <label className="full-width">
-                Enter OTP
-                <input
-                  name="otp"
-                  value={enteredOtp}
-                  onChange={(e) => setEnteredOtp(e.target.value)}
-                  placeholder="Enter 6-digit OTP"
-                  required
-                />
-              </label>
-            </div>
+              <p className="auth-helper-text">Use your registered email or mobile number with password.</p>
 
-            <div className="profile-edit-actions">
-              <button type="button" className="cancel-btn" onClick={handleGenerateOtp}>
-                Generate OTP
-              </button>
-              <button type="submit" className="save-btn">
-                Login
-              </button>
-            </div>
+              <div className="profile-edit-actions">
+                <button type="submit" className="save-btn">
+                  Login
+                </button>
+              </div>
 
-            {generatedOtp && <p className="otp-preview">Demo OTP: {generatedOtp}</p>}
-            {authMessage && <p className="saved-message">{authMessage}</p>}
-          </form>
+              {authMessage && <p className="saved-message">{authMessage}</p>}
+            </form>
+          ) : (
+            <form className="profile-edit-form auth-form" onSubmit={handleSignup}>
+              <div className="form-grid">
+                <label>
+                  Full Name
+                  <input
+                    name="fullName"
+                    value={signupDetails.fullName}
+                    onChange={handleSignupInputChange}
+                    required
+                  />
+                </label>
+
+                <label>
+                  Email
+                  <input
+                    name="email"
+                    type="email"
+                    value={signupDetails.email}
+                    onChange={handleSignupInputChange}
+                    required
+                  />
+                </label>
+
+                <label className="full-width">
+                  Mobile Number
+                  <input
+                    name="phone"
+                    value={signupDetails.phone}
+                    onChange={handleSignupInputChange}
+                    required
+                  />
+                </label>
+
+                <label>
+                  Password
+                  <input
+                    name="password"
+                    type="password"
+                    value={signupDetails.password}
+                    onChange={handleSignupInputChange}
+                    required
+                  />
+                </label>
+
+                <label>
+                  Confirm Password
+                  <input
+                    name="confirmPassword"
+                    type="password"
+                    value={signupDetails.confirmPassword}
+                    onChange={handleSignupInputChange}
+                    required
+                  />
+                </label>
+              </div>
+
+              <div className="profile-edit-actions">
+                <button type="submit" className="save-btn">
+                  Create Account
+                </button>
+              </div>
+
+              {authMessage && <p className="saved-message">{authMessage}</p>}
+            </form>
+          )}
         </div>
       </section>
     );

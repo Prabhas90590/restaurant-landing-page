@@ -30,6 +30,12 @@
   place-items: center;
   font-weight: 700;
   font-size: 22px;
+  transition: all 0.3s ease;
+}
+
+.avatar.logged-in {
+  background: linear-gradient(135deg, #00d084, #00a870);
+  box-shadow: 0 0 0 4px rgba(0, 208, 132, 0.2);
 }
 
 .profile-main h2 {
@@ -40,16 +46,56 @@
 
 .profile-main p {
   color: #666;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.logged-in-badge {
+  color: #00d084 !important;
+  font-weight: 600;
+}
+
+.guest-badge {
+  color: #ff6a3d !important;
+  font-weight: 600;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
 }
 
 .edit-profile-btn {
-  margin-left: auto;
   background: #1a1a1a;
   border: none;
   color: #fff;
   padding: 12px 24px;
   border-radius: 8px;
   cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.edit-profile-btn:hover {
+  background: #333;
+  transform: translateY(-2px);
+}
+
+.logout-btn {
+  background: #ff4757;
+  border: none;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.logout-btn:hover {
+  background: #ff3838;
+  transform: translateY(-2px);
 }
 
 .profile-grid {
@@ -81,7 +127,13 @@
     grid-template-columns: 1fr;
   }
 
-  .edit-profile-btn {
+  .profile-actions {
     margin-left: 0;
+    width: 100%;
+    order: 4;
+  }
+
+  .profile-card {
+    padding: 20px;
   }
 }

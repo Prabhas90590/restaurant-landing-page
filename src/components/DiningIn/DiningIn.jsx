@@ -38,6 +38,22 @@ const ambiencePhotos = [
 const DiningIn = () => {
   const navigate = useNavigate();
 
+  const handleBooking = () => {
+    const savedAuth = localStorage.getItem('orderCheyAuth');
+    let isLoggedIn = false;
+
+    try {
+      if (savedAuth) {
+        const parsedAuth = JSON.parse(savedAuth);
+        isLoggedIn = parsedAuth?.isLoggedIn === true;
+      }
+    } catch {
+      isLoggedIn = false;
+    }
+
+    navigate(isLoggedIn ? '/booking' : '/profile');
+  };
+
   return (
     <section id="dining" className="dining-section">
       <div className="dining-container">
@@ -74,7 +90,7 @@ const DiningIn = () => {
             </div>
           </div>
 
-          <button className="dining-book-btn" onClick={() => navigate('/booking')}>
+          <button className="dining-book-btn" onClick={handleBooking}>
             Book Table
           </button>
         </div>

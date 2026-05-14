@@ -106,7 +106,7 @@ const Header = () => {
               <path d="M14.2 5.2c.2.4.2.9-.1 1.3" />
             </svg>
           </span>
-          <span className="logo-text">ORDER KARO</span>
+          <span className="logo-text">Order Now</span>
         </button>
         <div className="nav-links desktop-only">
           <a href="#">Home</a>
@@ -117,7 +117,7 @@ const Header = () => {
               {profileInitial}
             </button>
           ) : (
-            <button className="book-btn" onClick={handleProfile}>Login</button>
+            <button className="book-btn" onClick={handleProfile}>Login / Sign Up</button>
           )}
         </div>
         <button className="mobile-toggle" onClick={() => setIsOpen(!isOpen)}>
@@ -134,7 +134,7 @@ const Header = () => {
               {profileInitial}
             </button>
           ) : (
-            <button className="book-btn w-full" onClick={handleProfile}>Login</button>
+            <button className="book-btn w-full" onClick={handleProfile}>Login / Sign Up</button>
           )}
         </div>
       )}
@@ -167,7 +167,7 @@ const Header = () => {
       {isLoggedIn ? (
         <button type="button" className="sidebar-logout" onClick={handleLogout}>Logout</button>
       ) : (
-        <button type="button" className="sidebar-logout" onClick={() => openRoute('/profile')}>Login</button>
+        <button type="button" className="sidebar-logout" onClick={() => openRoute('/profile')}>Login / Sign Up</button>
       )}
 
       {sidebarNote && <p className="sidebar-note">{sidebarNote}</p>}

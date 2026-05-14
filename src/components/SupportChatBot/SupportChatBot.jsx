@@ -58,7 +58,7 @@ const SupportChatBot = () => {
           <div className="support-chat-header">
             <div>
               <p className="support-chat-eyebrow">Customer Support</p>
-              <h3>ORDER KARO Assistant</h3>
+              <h3>Order Now Assistant</h3>
             </div>
             <button type="button" className="support-close-btn" onClick={() => setIsOpen(false)} aria-label="Close support chat">
               ✕

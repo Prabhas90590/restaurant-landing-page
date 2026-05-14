@@ -6,7 +6,6 @@ import FeaturedDishes from './components/FeatureDishes/FeaturedDishes';
 import DiningIn from './components/DiningIn/DiningIn';
 import Reviews from './components/Review/Reviews';
 import Gallery from './components/Gallery/Gallery';
-import UserProfile from './components/UserProfile/UserProfile';
 import Footer from './components/Footer/Footer';
 import BookingPage from './components/BookingPage/BookingPage';
 import ProfilePage from './components/ProfilePage/ProfilePage';
@@ -30,7 +29,6 @@ function App() {
               <DiningIn />
               <Reviews />
               <Gallery />
-              <UserProfile />
               <Footer />
               <SupportChatBot />
               <HomeOrderTracker />

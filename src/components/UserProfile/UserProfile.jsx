@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './UserProfile.css';
 
@@ -14,17 +14,39 @@ const defaultProfile = {
 
 const UserProfile = () => {
   const navigate = useNavigate();
+  const [profileData, setProfileData] = useState(defaultProfile);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const profileData = useMemo(() => {
-    const saved = localStorage.getItem('orderCheyProfile');
-    if (!saved) return defaultProfile;
+  useEffect(() => {
+    const loadProfile = () => {
+      const saved = localStorage.getItem('orderCheyProfile');
+      if (saved) {
+        try {
+          const userData = JSON.parse(saved);
+          setProfileData({ ...defaultProfile, ...userData });
+          setIsLoggedIn(true);
+        } catch (error) {
+          setProfileData(defaultProfile);
+          setIsLoggedIn(false);
+        }
+      } else {
+        setProfileData(defaultProfile);
+        setIsLoggedIn(false);
+      }
+    };
 
-    try {
-      return { ...defaultProfile, ...JSON.parse(saved) };
-    } catch {
-      return defaultProfile;
-    }
+    loadProfile();
+
+    // Listen for storage changes across tabs
+    window.addEventListener('storage', loadProfile);
+    return () => window.removeEventListener('storage', loadProfile);
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('orderCheyProfile');
+    setProfileData(defaultProfile);
+    setIsLoggedIn(false);
+  };
 
   const avatarLetter = (profileData.fullName || 'U').trim().charAt(0).toUpperCase();
 
@@ -32,12 +54,23 @@ const UserProfile = () => {
     <section id="profile" className="user-profile-section">
       <div className="user-profile-container">
         <div className="profile-card">
-          <div className="avatar">{avatarLetter}</div>
+          <div className={`avatar ${isLoggedIn ? 'logged-in' : ''}`}>{avatarLetter}</div>
           <div className="profile-main">
             <h2>{profileData.fullName}</h2>
-            <p>Food Explorer Member</p>
+            <p className={isLoggedIn ? 'logged-in-badge' : 'guest-badge'}>
+              {isLoggedIn ? '✓ Logged In' : 'Guest User'}
+            </p>
           </div>
-          <button className="edit-profile-btn" onClick={() => navigate('/profile')}>Profile</button>
+          <div className="profile-actions">
+            <button className="edit-profile-btn" onClick={() => navigate('/profile')}>
+              Profile
+            </button>
+            {isLoggedIn && (
+              <button className="logout-btn" onClick={handleLogout}>
+                Logout
+              </button>
+            )}
+          </div>
         </div>
 
         <div className="profile-grid">
